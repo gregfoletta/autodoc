@@ -1,12 +1,12 @@
 on:
   schedule:
-    - cron: '20 7 * * *'
+    - cron: '35 7 * * *'
 
 name: Generate Documentation
 
 jobs:
   generate-documentation:
-    runs-on: unbuntu-latest
+    runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
