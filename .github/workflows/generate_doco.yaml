@@ -1,0 +1,37 @@
+on:
+  schedule:
+    - cron: '55 6 * * *'
+
+name: Generate Documentation
+
+jobs:
+  generate-documentation:
+    runs-on: unbunti-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Install vctrs
+        run: Rscript -e 'install.packages(c("vctrs"))'
+
+      - name: Install packages
+        run: Rscript -e 'install.packages(c("tidyverse", "here", "jsonlite"))'
+
+      #- name: Get data
+      #  run: Rscript -e 'source(here::here("R", "scrape_cash_rate.R"), echo = TRUE)'
+
+      #- name: Render README
+      #  run: Rscript -e 'rmarkdown::render(here::here("README.Rmd"))'
+
+      - name: Commit
+        run: |
+          git config --global user.name 'Greg Foletta'
+          git config --global user.email 'greg@foletta.org'
+          git add .
+          git commit -m 'Adding Data' || echo "No changes to commit"
+          git push || echo "No changes to commit"
