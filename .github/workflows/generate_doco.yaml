@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '55 6 * * *'
+    - cron: '05 7 * * *'
 
 name: Generate Documentation
 
