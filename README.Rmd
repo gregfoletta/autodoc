@@ -2,14 +2,36 @@
 output: github_document 
 ---
 
-```{r}
-library(tidyverse)
+```{r include=FALSE}
+library(readr)
+library(dplyr)
+library(htmltools)
 library(gt)
+
+remove_css <- function(x) {
+  x <- gsub("<style>.*</style>", "", x)
+  htmltools::HTML(x)
+}
 ```
 
-# Documentation
+# Device Information
 
-```{r}
-read_csv('./data/dvmdb.csv') |>
-    gt()
+```{r echo=FALSE}
+read_csv('./data/dvmdb.csv', show_col_types = FALSE) |>
+    gt() |> 
+    cols_label(hostname = "Hostname", serial = "Serial Number", version = "Version", platform = "Platform") |> 
+    as_raw_html(inline_css = FALSE) |>
+    remove_css()
 ```
+
+# Interfaces
+
+```{r echo = FALSE}
+read_csv('./data/interfaces.csv', show_col_types = FALSE) |>
+    filter(ip != '0.0.0.0 0.0.0.0') |> 
+    gt() |> 
+    as_raw_html(inline_css = FALSE) |>
+    remove_css()
+```
+
+

@@ -1,4 +1,6 @@
-suppressMessages( library(tidyverse) )
+library(tibble)
+library(dplyr)
+library(readr)
 library(httr2)
 library(glue)
 library(rjsonpath)
@@ -14,7 +16,7 @@ fmg_api_call <- function(uri, key, params = list(), method = 'get', id = 1, verb
         req_perform(verbosity = verbosity)
 }
 
-
+# Get device information
 dvmdb <- fmg_api_call('https://fmg.e.foletta.xyz', api_key, list(list(url = "/dvmdb/device")), verbosity = 3) |>
     resp_body_json()
 
@@ -25,3 +27,36 @@ tibble(
     platform = dvmdb |> json_path("$..platform_str")
 ) |>
     write_csv('./data/dvmdb.csv')
+
+
+# Get the interface info
+interface_param <- list(
+    list(
+        url = '/sys/proxy/json',
+        data = list(
+            action = 'get',
+            resource = '/api/v2/cmdb/system/interface',
+            target = list('/adom/cust0001/group/All_FortiGate') 
+        )
+    )
+)
+
+interfaces <- fmg_api_call('https://fmg.e.foletta.xyz', api_key, interface_param, method = 'exec', verbosity = 3) |>
+    resp_body_json()
+
+
+full_interfaces <- tibble()
+for (dev in interfaces |> json_path('$.result[0].data')) {
+    i <- tibble()
+    device <- dev |> json_path('$..target')
+    if (dev$status$code == 0) {
+        i <- tibble(
+            device = device,
+            name = dev |> json_path('$.response.results[*].name'),
+            ip = dev |> json_path('$.response.results[*].ip')
+        )
+    }
+    full_interfaces <- bind_rows(full_interfaces, i)
+}
+
+full_interfaces |> write_csv('./data/interfaces.csv')
