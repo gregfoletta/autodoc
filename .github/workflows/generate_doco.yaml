@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '35 7 * * *'
+    - cron: '35 2 * * *'
 
 name: Generate Documentation
 
@@ -22,8 +22,8 @@ jobs:
       - name: Install packages
         run: Rscript -e 'install.packages(c("tidyverse", "here", "jsonlite"))'
 
-      #- name: Get data
-      #  run: Rscript -e 'source(here::here("R", "scrape_cash_rate.R"), echo = TRUE)'
+      - name: Get data
+        run: Rscript -e 'source(here::here("acquire_data.R"), echo = TRUE)'
 
       #- name: Render README
       #  run: Rscript -e 'rmarkdown::render(here::here("README.Rmd"))'
