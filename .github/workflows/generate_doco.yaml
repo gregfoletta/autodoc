@@ -20,7 +20,7 @@ jobs:
         run: Rscript -e 'install.packages(c("vctrs"))'
 
       - name: Install packages
-        run: Rscript -e 'install.packages(c("tidyverse", "here", "jsonlite"))'
+        run: Rscript -e 'install.packages(c("tidyverse", "here", "jsonlite", "knitr"))'
 
       - name: Get data
         run: Rscript -e 'source(here::here("acquire_data.R"), echo = TRUE)'
