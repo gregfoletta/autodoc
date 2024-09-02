@@ -1,0 +1,6 @@
+hostname,serial,version,platform
+fw3-i-foletta-xyz,FGVMELTM22001114,700,FortiGate-VM64-KVM
+fw4-i-foletta-xyz,FGVMELTM22001112,700,FortiGate-VM64-KVM
+fw5-i-foletta-xyz,FGVMELTM22001111,700,FortiGate-VM64-KVM
+fw6-i-foletta-xyz,FGVMELTM22001113,700,FortiGate-VM64-KVM
+fw1-i-foletta-xyz,FGT80FTK22040358,700,FortiGate-80F
