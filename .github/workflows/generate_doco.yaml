@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '35 2 * * *'
+    - cron: '00 11 * * *'
 
 name: Generate Documentation
 
@@ -20,7 +20,7 @@ jobs:
         run: Rscript -e 'install.packages(c("vctrs"))'
 
       - name: Install packages
-        run: Rscript -e 'install.packages(c("tibble", "here", "jsonlite", "knitr", "gt", "httr2", "rjsonpath", "readr", "htmltools", "dplyr"))'
+        run: Rscript -e 'install.packages(c("tibble", "here", "jsonlite", "knitr", "gt", "httr2", "rjsonpath", "readr", "htmltools", "dplyr", "rjsonpath"))'
 
       - name: Get data
         run: Rscript -e 'source(here::here("acquire_data.R"), echo = TRUE)'
