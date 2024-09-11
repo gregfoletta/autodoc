@@ -20,7 +20,7 @@ jobs:
         run: Rscript -e 'install.packages(c("vctrs"))'
 
       - name: Install packages
-        run: Rscript -e 'install.packages(c("tibble", "here", "jsonlite", "knitr", "gt", "httr2", "rjsonpath", "readr", "htmltools", "dplyr", "rjsonpath"))'
+        run: Rscript -e 'install.packages(c("tibble", "here", "jsonlite", "knitr", "gt", "httr2", "rjsonpath", "readr", "htmltools", "dplyr", "devtools")); devtools::install_github("blmoore/rjsonpath")'
 
       - name: Get data
         run: Rscript -e 'source(here::here("acquire_data.R"), echo = TRUE)'
